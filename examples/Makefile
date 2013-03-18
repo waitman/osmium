@@ -4,11 +4,11 @@
 #
 #------------------------------------------------------------------------------
 
-CXX = g++
-#CXX = clang++
+#CXX = g++
+CXX = clang++
 
-CXXFLAGS = -g
-#CXXFLAGS = -O3 -g
+#CXXFLAGS = -g
+CXXFLAGS = -O3 
 
 CXXFLAGS += -Wall -Wextra -Wdisabled-optimization -pedantic -Wctor-dtor-privacy -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo -Wno-long-long
 
@@ -17,10 +17,10 @@ CXXFLAGS_LIBXML2 = $(shell xml2-config --cflags)
 CXXFLAGS_OGR     = $(shell gdal-config --cflags)
 
 CXXFLAGS += -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-CXXFLAGS += -I../include
+CXXFLAGS += -I../include -I/usr/local/include
 
 # remove this if you do not want debugging to be compiled in
-CXXFLAGS += -DOSMIUM_WITH_DEBUG
+#CXXFLAGS += -DOSMIUM_WITH_DEBUG
 
 LIB_EXPAT  = -lexpat
 LIB_GD     = -lgd -lz -lm
@@ -31,7 +31,7 @@ LIB_SHAPE  = -lshp $(LIB_GEOS)
 LIB_SQLITE = -lsqlite3
 LIB_XML2   = $(shell xml2-config --libs)
 
-LDFLAGS = $(LIB_EXPAT) $(LIB_PBF)
+LDFLAGS = $(LIB_EXPAT) $(LIB_PBF) -L/usr/local/lib
 
 PROGRAMS = \
     osmium_convert \

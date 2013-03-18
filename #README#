@@ -1,0 +1,180 @@
+
+clang++ -O3 -std=c++0x -losmpbf -lprotobuf-lite -lboost_system -L/usr/local/lib -I/usr/local/include example_routing.cc
+
+Osmium
+======
+
+/* updated for use on FreeBSD by Waitman Gobble <ns@waitman.net> */
+/* notes below show required ports */
+
+http://wiki.openstreetmap.org/wiki/Osmium
+
+Osmium is a C++ framework for working with OSM data files. Osmium can read OSM
+data in XML or binary format (PBF) and can call different handlers for each OSM
+object.
+
+Available handlers include:
+* Javascript handler (calls Javascript callbacks you provide)
+* Multipolygon handler (assembles areas(multipolygons) from relations and ways)
+* NodeLocationStore handler (stores node locations and builds way geometries from them)
+* Statistics handler (does some general statistics)
+* (others...)
+
+Of course, you can also write your own handlers.
+
+There are a few applications that use Osmium in the examples directory.
+
+The osmjs directory contains the osmjs application that calls your Javascript code
+which can then work with the OSM data. It can, for instance, be used to convert
+OSM data into Shapefiles.
+
+Note that OSM input files must contain objects in the right order for Osmium to
+work properly: first nodes, then ways, then relations. Normally OSM files are
+sorted this way, but if yours aren't, you can use Osmosis with the --sort
+option to do this.
+
+PREREQUISITES
+-------------
+
+Different parts of Osmium and the applications build on top of it need
+different libraries:
+
+/* devel/boost-all */
+boost (several libraries)
+    http://www.boost.org/
+
+/* zlib is in base */
+zlib (for PBF support)
+    http://www.zlib.net/
+
+/* devel/shapelib */
+shapelib (for shapefile support in osmjs)
+    http://shapelib.maptools.org/
+
+/* databases/sqlite3 */
+libsqlite3 (for some applications only)
+    http://sqlite.org/
+
+/* graphics/gd */
+libgd (for nodedensity example only)
+    http://www.libgd.org/
+
+/* graphics/gdal */
+GDAL (for OGR support)
+    http://gdal.org/
+
+/* textproc/expat2 */
+Expat (for parsing XML files)
+    http://expat.sourceforge.net/
+
+/* graphics/geos */
+GEOS (for assembling multipolygons etc.)
+    http://trac.osgeo.org/geos/
+
+/* devel/google-sparsehash */
+Google sparsehash
+    http://code.google.com/p/google-sparsehash/
+
+/* lang/v8 */
+Google V8 Javascript engine (for Javascript support)
+    http://code.google.com/apis/v8/
+
+/* devel/icu */
+LibICU (for UTF-8/UTF-16 conversion, only for Javascript support)
+    http://site.icu-project.org/
+
+/* devel/protobuf */
+Google protocol buffers (for PBF support)
+    http://code.google.com/p/protobuf/ (at least version 2.3.0 needed)
+    Also see http://wiki.openstreetmap.org/wiki/PBF_Format
+
+/* devel/doxygen */ 
+Doxygen (to build API documentation)
+    http://www.stack.nl/~dimitri/doxygen/
+
+libboost-test (for tests)
+    http://www.boost.org/doc/libs/1_47_0/libs/test/doc/html/index.html
+
+OSMPBF (for PBF support)
+    https://github.com/scrosby/OSM-binary
+    https://github.com/waitman/OSM-binary-FreeBSD
+
+
+FILES
+-----
+
+Doxyfile    - Needed for building the Osmium C++ docs, call "make doc" to build.
+include     - C/C++ include files. All of Osmium is in those header files which
+              are needed for building Osmium applications.
+osmjs       - Osmium application "osmjs".
+osmjs/js    - Example Javascript handlers.
+examples    - Osmium example applications.
+
+
+BUILDING
+--------
+
+First you need to (build and) install all the prerequisites.
+
+Osmium is a header-only library, so there is nothing to build for the
+library itself.
+
+Call "gmake doc" in the top-level directory to build the Osmium C++ docs.
+
+Call "gmake install" to install the include files and documentation.
+
+See "examples/README" for build instructions of the example applications.
+
+See "osmjs/README" for build instructions of osmjs.
+
+Call "gmake clean" in any of those places to clean up.
+
+
+USING OSMIUM IN YOUR C++ CODE
+-----------------------------
+
+To use Osmium in your code you just have to include the headers you are
+interested in. So, if you need the Way class for instance you include
+<osmium/osm/way.hpp>. If you need the Debug handler, you include
+<osmium/handler/debug.hpp>.
+
+If you need any OSM file input, then first define one or both of these macros
+and then include <osmium.hpp>:
+
+  #define OSMIUM_WITH_PBF_INPUT
+  #define OSMIUM_WITH_XML_INPUT
+  #include <osmium.hpp>
+
+There are some parts of Osmium that are a bit more difficult to use.
+You'll find some examples in the 'example' and 'osmjs' directories.
+
+
+TESTING
+-------
+
+There are a few tests using the Boost Unit Test Framework in the 'test'
+directory. Go there and type "./run_tests.sh" to compile and run the tests.
+Many more tests are needed, any help appreciated.
+
+
+LICENSE
+-------
+
+Osmium is available under the GNU LGPL version 3 or later, or - at your option -
+the GNU GPL version 3 or later.
+
+See http://eigen.tuxfamily.org/index.php?title=Licensing_FAQ&oldid=1116 for a
+good description of what that means.
+
+
+AUTHORS
+-------
+
+Osmium was mainly written and is maintained by Jochen Topf <jochen@topf.org>.
+
+Other authors:
+* Frederik Ramm <frederik@remote.org> (Multipolygon code, ...)
+* Christian Vetter <veaac.fdirct@gmail.com> (PBF parser)
+* Scott A. Crosby <scott@sacrosby.com> (PBF format)
+* Peter Körner <github@mazdermind.de> (XML and PBF writer, ...)
+
