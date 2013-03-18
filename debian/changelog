@@ -1,5 +1,0 @@
-libosmium-dev (0.1) maverick; urgency=low
-
-  * Initial standalone debian package
-
- -- Jochen Topf <jochen@topf.org>  Wed, 4 May 2011 09:42:00 +0100
