@@ -31,14 +31,13 @@ namespace Osmium {
 
     namespace Tags {
 
-        /**
-         * Operation that turns a Tag into a string with many parameters that define how this is done.
-         *
-         * @parameter escape String that contains all characters that should be escaped with a backslash (\)
-         * @parameter prefix String printed before a tag.
-         * @parameter infix String printed between key and value of a tag.
-         * @parameter suffix String printed after a tag.
-         * @parameter join String used to join several tags together.
+        /*
+          Operation that turns a Tag into a string with many parameters that define how this is done.
+          @parameter escape String that contains all characters that should be escaped with a backslash (\)
+          @parameter prefix String printed before a tag.
+          @parameter infix String printed between key and value of a tag.
+          @parameter suffix String printed after a tag.
+          @parameter join String used to join several tags together.
          */
         class TagToStringOp : public std::binary_function<std::string&, const Osmium::OSM::Tag&, std::string&> {
 

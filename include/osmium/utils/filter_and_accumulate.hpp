@@ -26,14 +26,14 @@ You should have received a copy of the Licenses along with Osmium. If not, see
 
 namespace Osmium {
 
-    /**
-     * Similar to the std::accumulate function, but first filters while
-     * iterating over the container.
-     *
-     * @parameter container Some container class, must support begin() and end() functions.
-     * @parameter filter Filter class, must support operator() that takes a member of the container and returns bool.
-     * @parameter init Initial value for accumulation.
-     * @parameter binary_op Operation called when accumulating.
+    /*
+      Similar to the std::accumulate function, but first filters while
+      iterating over the container.
+     
+      @parameter container Some container class, must support begin() and end() functions.
+      @parameter filter Filter class, must support operator() that takes a member of the container and returns bool.
+      @parameter init Initial value for accumulation.
+      @parameter binary_op Operation called when accumulating.
      */
     template <class TContainer, class TFilter, class TAccum, class TBinaryOp>
     inline TAccum filter_and_accumulate(TContainer& container, TFilter& filter, const TAccum& init, TBinaryOp binary_op) {

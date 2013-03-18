@@ -2,6 +2,11 @@
 Osmium
 ======
 
+/* updated for use on FreeBSD by Waitman Gobble <ns@waitman.net> */
+/* notes below show required ports */
+/* changes to Makefile, Doxyfile (remove 2 deprecated warnings), 
+	adjusted comments in two headers to avoid warnings */
+
 http://wiki.openstreetmap.org/wiki/Osmium
 
 Osmium is a C++ framework for working with OSM data files. Osmium can read OSM
@@ -34,71 +39,65 @@ PREREQUISITES
 Different parts of Osmium and the applications build on top of it need
 different libraries:
 
+/* devel/boost-all */
 boost (several libraries)
     http://www.boost.org/
-    Debian/Ubuntu: libboost-dev
 
+/* zlib is in base */
 zlib (for PBF support)
     http://www.zlib.net/
-    Debian/Ubuntu: zlib1g-dev
 
+/* devel/shapelib */
 shapelib (for shapefile support in osmjs)
     http://shapelib.maptools.org/
-    Debian/Ubuntu: libshp-dev
 
+/* databases/sqlite3 */
 libsqlite3 (for some applications only)
     http://sqlite.org/
-    Debian/Ubuntu: libsqlite3-dev
 
+/* graphics/gd */
 libgd (for nodedensity example only)
     http://www.libgd.org/
-    Debian/Ubuntu: libgd2-xpm-dev
 
+/* graphics/gdal */
 GDAL (for OGR support)
     http://gdal.org/
-    Debian/Ubuntu: libgdal1-dev
 
+/* textproc/expat2 */
 Expat (for parsing XML files)
     http://expat.sourceforge.net/
-    Debian/Ubuntu: libexpat1-dev
 
+/* graphics/geos */
 GEOS (for assembling multipolygons etc.)
     http://trac.osgeo.org/geos/
-    Debian/Ubuntu: libgeos++-dev
 
+/* devel/google-sparsehash */
 Google sparsehash
     http://code.google.com/p/google-sparsehash/
-    Debian/Ubuntu: libsparsehash-dev
 
+/* lang/v8 */
 Google V8 Javascript engine (for Javascript support)
     http://code.google.com/apis/v8/
-    Debian/Ubuntu: libv8-dev
 
+/* devel/icu */
 LibICU (for UTF-8/UTF-16 conversion, only for Javascript support)
     http://site.icu-project.org/
-    Debian/Ubuntu: libicu-dev
 
+/* devel/protobuf */
 Google protocol buffers (for PBF support)
     http://code.google.com/p/protobuf/ (at least version 2.3.0 needed)
-    Debian/Ubuntu: libprotobuf-dev protobuf-compiler
     Also see http://wiki.openstreetmap.org/wiki/PBF_Format
 
+/* devel/doxygen */ 
 Doxygen (to build API documentation)
     http://www.stack.nl/~dimitri/doxygen/
-    Debian/Ubuntu: doxygen
 
 libboost-test (for tests)
     http://www.boost.org/doc/libs/1_47_0/libs/test/doc/html/index.html
-    Debian/Ubuntu: libboost-test-dev
 
 OSMPBF (for PBF support)
     https://github.com/scrosby/OSM-binary
-    Debian/Ubuntu: libosmpbf-dev
-
-You need to either install the Debian/Ubuntu packages (or equivalent for other
-distributions) or install those libraries from source. Most libraries should be
-available in all distributions. The Google libs (V8, protobuf, sparsehash)
-are only available in newer distributions (Ubuntu since Maverick).
+    https://github.com/waitman/OSM-binary-FreeBSD
 
 
 FILES
@@ -120,15 +119,15 @@ First you need to (build and) install all the prerequisites.
 Osmium is a header-only library, so there is nothing to build for the
 library itself.
 
-Call "make doc" in the top-level directory to build the Osmium C++ docs.
+Call "gmake doc" in the top-level directory to build the Osmium C++ docs.
 
-Call "make install" to install the include files and documentation.
+Call "gmake install" to install the include files and documentation.
 
 See "examples/README" for build instructions of the example applications.
 
 See "osmjs/README" for build instructions of osmjs.
 
-Call "make clean" in any of those places to clean up.
+Call "gmake clean" in any of those places to clean up.
 
 
 USING OSMIUM IN YOUR C++ CODE

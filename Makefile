@@ -4,7 +4,7 @@
 #
 #------------------------------------------------------------------------------
 
-CXX=g++
+CXX=clang++ 
 
 all:
 
@@ -14,12 +14,12 @@ clean:
 	rm -fr check-includes-report doc/html test/tests
 
 install: doc
-	install -m 755 -g root -o root -d $(DESTDIR)/usr/include
-	install -m 755 -g root -o root -d $(DESTDIR)/usr/share/doc/libosmium-dev
-	install -m 644 -g root -o root README $(DESTDIR)/usr/share/doc/libosmium-dev/README
-	install -m 644 -g root -o root include/osmium.hpp $(DESTDIR)/usr/include
-	cp --recursive include/osmium $(DESTDIR)/usr/include
-	cp --recursive doc/html $(DESTDIR)/usr/share/doc/libosmium-dev
+	install -m 755 -g wheel -o root -d $(DESTDIR)/usr/local/include
+	install -m 755 -g wheel -o root -d $(DESTDIR)/usr/local/share/doc/libosmium-dev
+	install -m 644 -g wheel -o root README $(DESTDIR)/usr/local/share/doc/libosmium-dev/README
+	install -m 644 -g wheel -o root include/osmium.hpp $(DESTDIR)/usr/local/include
+	cp -R include/osmium $(DESTDIR)/usr/local/include
+	cp -R doc/html $(DESTDIR)/usr/local/share/doc/libosmium-dev
 
 check:
 	cppcheck --enable=all -I include */*.cpp test/*/test_*.cpp
